@@ -12,7 +12,7 @@ namespace SafyroPresupuestos.Services
 
         public Task<IEnumerable<ManoObraPresupuesto>> GetAllAsync() => Task.FromResult<IEnumerable<ManoObraPresupuesto>>(_items);
 
-        public Task<ManoObraPresupuesto> GetByIdAsync(int id) => Task.FromResult(_items.Find(x => x.Id == id));
+        //public Task<ManoObraPresupuesto> GetByIdAsync(int id) => Task.FromResult(_items.Find(x => x.Id == id));
 
         public Task CreateAsync(ManoObraPresupuesto item)
         {
@@ -31,12 +31,12 @@ namespace SafyroPresupuestos.Services
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(int id)
-        {
-            var item = _items.Find(x => x.Id == id);
-            if (item != null)
-                _items.Remove(item);
-            return Task.CompletedTask;
-        }
+        //public Task DeleteAsync(int id)
+        //{
+        //    var item = _items.Find(x => x.Id == id);
+        //    if (item != null)
+        //        _items.Remove(item);
+        //    return Task.CompletedTask;
+        //}
     }
 }

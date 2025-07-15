@@ -328,6 +328,7 @@ C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\Sa
 C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\SafyroPresupuestos.csproj.CoreCompileInputs.cache
 C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\SafyroPresupuestos.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\SafyroPresupuestos.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\SafyroPresupuestos.sourcelink.json
 C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\santi\OneDrive\Documentos\GitHub\SafyroPresupuestos\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

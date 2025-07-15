@@ -1,16 +1,15 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SafyroPresupuestos.Entities
 {
-    public class ManoObraPresupuesto
+    public class ServicioTerceroPresupuesto
     {
         [Key]
         public Guid Id { get; set; }
         public int PresupuestoId { get; set; }
         public Presupuestos? Presupuesto { get; set; }
-        public int ManoObraId { get; set; }
-        public ManoObra? ManoObra { get; set; }
+        public int ServicioTerceroId { get; set; }
+        public ServicioTercero? ServicioTercero { get; set; }
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
         public string Unidad { get; set; }
@@ -20,4 +19,5 @@ namespace SafyroPresupuestos.Entities
         public string Rubro { get; set; }
         public string Observaciones { get; set; }
     }
+
 }

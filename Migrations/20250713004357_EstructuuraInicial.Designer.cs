@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SafyroPresupuestos.Data;
 
@@ -11,9 +12,11 @@ using SafyroPresupuestos.Data;
 namespace SafyroPresupuestos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250713004357_EstructuuraInicial")]
+    partial class EstructuuraInicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -437,71 +440,6 @@ namespace SafyroPresupuestos.Migrations
                     b.ToTable("EquipoRealPresupuesto");
                 });
 
-            modelBuilder.Entity("SafyroPresupuestos.Entities.Evidencia", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comentario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaSubida")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProyectoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProyectoId");
-
-                    b.ToTable("Evidencias");
-                });
-
-            modelBuilder.Entity("SafyroPresupuestos.Entities.EvidenciaItemPresupuesto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Costo")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ItemPresupuestoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("NombreArchivo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UrlArchivo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemPresupuestoId");
-
-                    b.ToTable("EvidenciasItemPresupuesto");
-                });
-
             modelBuilder.Entity("SafyroPresupuestos.Entities.ItemPresupuesto", b =>
                 {
                     b.Property<Guid>("Id")
@@ -514,9 +452,6 @@ namespace SafyroPresupuestos.Migrations
                     b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("CostoReal")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -871,21 +806,6 @@ namespace SafyroPresupuestos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal?>("CostoRealCostosIndirectos")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CostoRealEquipos")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CostoRealManoObra")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CostoRealMateriales")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CostoRealServiciosTerceros")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("CostoTotal")
                         .HasColumnType("decimal(18,2)");
@@ -1368,28 +1288,6 @@ namespace SafyroPresupuestos.Migrations
                     b.Navigation("EquipoPresupuesto");
 
                     b.Navigation("Presupuesto");
-                });
-
-            modelBuilder.Entity("SafyroPresupuestos.Entities.Evidencia", b =>
-                {
-                    b.HasOne("SafyroPresupuestos.Entities.Proyecto", "Proyecto")
-                        .WithMany()
-                        .HasForeignKey("ProyectoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Proyecto");
-                });
-
-            modelBuilder.Entity("SafyroPresupuestos.Entities.EvidenciaItemPresupuesto", b =>
-                {
-                    b.HasOne("SafyroPresupuestos.Entities.ItemPresupuesto", "ItemPresupuesto")
-                        .WithMany()
-                        .HasForeignKey("ItemPresupuestoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ItemPresupuesto");
                 });
 
             modelBuilder.Entity("SafyroPresupuestos.Entities.ManoObra", b =>

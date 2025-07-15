@@ -1,21 +1,22 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.OpenApi.Models;
+using SafyroPresupuestos.Data;
+using SafyroPresupuestos.Models;
 using SafyroPresupuestos.Services;
 using SafyroPresupuestos.Services.Interfaces;
-using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using SafyroPresupuestos.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using SafyroPresupuestos.Models;
 using System.Security.Claims;
+using System.Text;
 
 namespace SafyroPresupuestos
 {
@@ -180,7 +181,15 @@ namespace SafyroPresupuestos
 				});
 			}
 
-         
+            app.UseStaticFiles(); // Esto ya viene por defecto si tienes wwwroot
+                                  // Si usas una carpeta fuera de wwwroot:
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+                RequestPath = "/uploads"
+            });
+
             app.UseStatusCodePages();
 			app.UseCors("AllowAll");
             app.UseHttpsRedirection();

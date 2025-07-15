@@ -17,17 +17,17 @@ namespace SafyroPresupuestos.Services
             _context = context;
         }
 
-        public async Task<List<Material>> GetAll() => await _context.Materiales.ToListAsync();
-        public async Task<Material> GetById(int id) => await _context.Materiales.FindAsync(id);
+        public async Task<List<Material>> GetAll() => await _context.Material.ToListAsync();
+        public async Task<Material> GetById(int id) => await _context.Material.FindAsync(id);
         public async Task<Material> Create(Material material)
         {
-            _context.Materiales.Add(material);
+            _context.Material.Add(material);
             await _context.SaveChangesAsync();
             return material;
         }
         public async Task<Material> Update(int id, Material material)
         {
-            var existing = await _context.Materiales.FindAsync(id);
+            var existing = await _context.Material.FindAsync(id);
             if (existing == null) return null;
             _context.Entry(existing).CurrentValues.SetValues(material);
             await _context.SaveChangesAsync();
@@ -35,9 +35,9 @@ namespace SafyroPresupuestos.Services
         }
         public async Task<bool> Delete(int id)
         {
-            var material = await _context.Materiales.FindAsync(id);
+            var material = await _context.Material.FindAsync(id);
             if (material == null) return false;
-            _context.Materiales.Remove(material);
+            _context.Material.Remove(material);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -1,18 +1,15 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SafyroPresupuestos.Entities
 {
-    public class Material
+    public class CostoIndirecto
     {
         [Key]
         public int Id { get; set; }
         public string Nombre { get; set; }
         public decimal CostoUnitario { get; set; }
         public int EmpresaId { get; set; }
-		public Empresa Empresa { get; set; }
-
-
-
-
+        public Empresa Empresa { get; set; }
     }
+
 }

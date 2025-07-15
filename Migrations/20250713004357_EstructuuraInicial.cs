@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SafyroPresupuestos.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class EstructuuraInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,6 +23,32 @@ namespace SafyroPresupuestos.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,7 +87,8 @@ namespace SafyroPresupuestos.Migrations
                 name: "Empresas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Dominio = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -71,17 +98,54 @@ namespace SafyroPresupuestos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Monedas",
+                name: "ItemPresupuesto",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PresupuestoId = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Rubro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tamaño = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemPresupuesto", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaterialRealPresupuesto",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PresupuestoId = table.Column<int>(type: "int", nullable: false),
+                    MaterialPresupuestoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostoReal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialRealPresupuesto", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Moneda",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Simbolo = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Monedas", x => x.Id);
+                    table.PrimaryKey("PK_Moneda", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,7 +175,8 @@ namespace SafyroPresupuestos.Migrations
                 name: "TiposManoObra",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -136,143 +201,6 @@ namespace SafyroPresupuestos.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EmpresaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Empresas_EmpresaId",
-                        column: x => x.EmpresaId,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EquiposDepreciacion",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreEquipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ValorInicial = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ValorResidual = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    VidaUtilMeses = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EquiposDepreciacion", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EquiposDepreciacion_Empresas_EmpresaId1",
-                        column: x => x.EmpresaId1,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Materiales",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CostoUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoriaMaterialId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Materiales", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Materiales_CategoriasMaterial_CategoriaMaterialId",
-                        column: x => x.CategoriaMaterialId,
-                        principalTable: "CategoriasMaterial",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Materiales_Empresas_EmpresaId1",
-                        column: x => x.EmpresaId1,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Proyectos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Proyectos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Proyectos_Empresas_EmpresaId1",
-                        column: x => x.EmpresaId1,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ManosObra",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CostoHora = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    HorasTrabajadas = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TipoManoObraId = table.Column<int>(type: "int", nullable: false),
-                    TipoManoObraId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ManosObra", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ManosObra_Empresas_EmpresaId1",
-                        column: x => x.EmpresaId1,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ManosObra_TiposManoObra_TipoManoObraId1",
-                        column: x => x.TipoManoObraId1,
-                        principalTable: "TiposManoObra",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -363,25 +291,172 @@ namespace SafyroPresupuestos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PERMISO_USUARIO",
+                name: "CostoIndirecto",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    USUARIO_ID = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    MODULO = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PERMISO = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ACTIVO = table.Column<bool>(type: "bit", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CostoUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PERMISO_USUARIO", x => x.Id);
+                    table.PrimaryKey("PK_CostoIndirecto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PERMISO_USUARIO_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_CostoIndirecto_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EquiposDepreciacion",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreEquipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ValorInicial = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorResidual = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    VidaUtilMeses = table.Column<int>(type: "int", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EquiposDepreciacion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EquiposDepreciacion_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Material",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CostoUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Material", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Material_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proyectos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proyectos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Proyectos_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServicioTercero",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CostoUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServicioTercero", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ServicioTercero_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false),
+                    Activo = table.Column<bool>(type: "bit", nullable: false),
+                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ManosObra",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CostoHora = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: false),
+                    TipoManoObraId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ManosObra", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ManosObra_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ManosObra_TiposManoObra_TipoManoObraId",
+                        column: x => x.TipoManoObraId,
+                        principalTable: "TiposManoObra",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -420,15 +495,15 @@ namespace SafyroPresupuestos.Migrations
                     Utilidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Iva = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CostoTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    MonedaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    MonedaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Presupuestos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Presupuestos_Monedas_MonedaId",
+                        name: "FK_Presupuestos_Moneda_MonedaId",
                         column: x => x.MonedaId,
-                        principalTable: "Monedas",
+                        principalTable: "Moneda",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -437,6 +512,28 @@ namespace SafyroPresupuestos.Migrations
                         principalTable: "Proyectos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PERMISO_USUARIO",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    USUARIO_ID = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MODULO = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PERMISO = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ACTIVO = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PERMISO_USUARIO", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PERMISO_USUARIO_Usuarios_UsuarioId1",
+                        column: x => x.UsuarioId1,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -462,13 +559,53 @@ namespace SafyroPresupuestos.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CostoIndirectoPresupuesto",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PresupuestoId = table.Column<int>(type: "int", nullable: false),
+                    CostoIndirectoId = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Unidad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Rubro = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CostoIndirectoPresupuesto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CostoIndirectoPresupuesto_CostoIndirecto_CostoIndirectoId",
+                        column: x => x.CostoIndirectoId,
+                        principalTable: "CostoIndirecto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CostoIndirectoPresupuesto_Presupuestos_PresupuestoId",
+                        column: x => x.PresupuestoId,
+                        principalTable: "Presupuestos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EquipoPresupuesto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
-                    EquipoDepreciacionId = table.Column<int>(type: "int", nullable: false)
+                    EquipoDepreciacionId = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Rubro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -491,10 +628,17 @@ namespace SafyroPresupuestos.Migrations
                 name: "ManoObraPresupuesto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
-                    ManoObraId = table.Column<int>(type: "int", nullable: false)
+                    ManoObraId = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Rubro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -517,18 +661,26 @@ namespace SafyroPresupuestos.Migrations
                 name: "MaterialPresupuesto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
-                    MaterialId = table.Column<int>(type: "int", nullable: false)
+                    MaterialId = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Rubro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tamaño = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MaterialPresupuesto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaterialPresupuesto_Materiales_MaterialId",
+                        name: "FK_MaterialPresupuesto_Material_MaterialId",
                         column: x => x.MaterialId,
-                        principalTable: "Materiales",
+                        principalTable: "Material",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -593,6 +745,66 @@ namespace SafyroPresupuestos.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ServicioTerceroPresupuesto",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PresupuestoId = table.Column<int>(type: "int", nullable: false),
+                    ServicioTerceroId = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Rubro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServicioTerceroPresupuesto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ServicioTerceroPresupuesto_Presupuestos_PresupuestoId",
+                        column: x => x.PresupuestoId,
+                        principalTable: "Presupuestos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ServicioTerceroPresupuesto_ServicioTercero_ServicioTerceroId",
+                        column: x => x.ServicioTerceroId,
+                        principalTable: "ServicioTercero",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EquipoRealPresupuesto",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PresupuestoId = table.Column<int>(type: "int", nullable: false),
+                    EquipoPresupuestoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostoReal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EquipoRealPresupuesto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EquipoRealPresupuesto_EquipoPresupuesto_EquipoPresupuestoId",
+                        column: x => x.EquipoPresupuestoId,
+                        principalTable: "EquipoPresupuesto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EquipoRealPresupuesto_Presupuestos_PresupuestoId",
+                        column: x => x.PresupuestoId,
+                        principalTable: "Presupuestos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -626,11 +838,6 @@ namespace SafyroPresupuestos.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_EmpresaId",
-                table: "AspNetUsers",
-                column: "EmpresaId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -640,6 +847,21 @@ namespace SafyroPresupuestos.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BitacorasPresupuesto_PresupuestoId",
                 table: "BitacorasPresupuesto",
+                column: "PresupuestoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostoIndirecto_EmpresaId",
+                table: "CostoIndirecto",
+                column: "EmpresaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostoIndirectoPresupuesto_CostoIndirectoId",
+                table: "CostoIndirectoPresupuesto",
+                column: "CostoIndirectoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CostoIndirectoPresupuesto_PresupuestoId",
+                table: "CostoIndirectoPresupuesto",
                 column: "PresupuestoId");
 
             migrationBuilder.CreateIndex(
@@ -653,9 +875,19 @@ namespace SafyroPresupuestos.Migrations
                 column: "PresupuestoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EquiposDepreciacion_EmpresaId1",
+                name: "IX_EquipoRealPresupuesto_EquipoPresupuestoId",
+                table: "EquipoRealPresupuesto",
+                column: "EquipoPresupuestoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquipoRealPresupuesto_PresupuestoId",
+                table: "EquipoRealPresupuesto",
+                column: "PresupuestoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquiposDepreciacion_EmpresaId",
                 table: "EquiposDepreciacion",
-                column: "EmpresaId1");
+                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ManoObraPresupuesto_ManoObraId",
@@ -668,24 +900,19 @@ namespace SafyroPresupuestos.Migrations
                 column: "PresupuestoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ManosObra_EmpresaId1",
+                name: "IX_ManosObra_EmpresaId",
                 table: "ManosObra",
-                column: "EmpresaId1");
+                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ManosObra_TipoManoObraId1",
+                name: "IX_ManosObra_TipoManoObraId",
                 table: "ManosObra",
-                column: "TipoManoObraId1");
+                column: "TipoManoObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Materiales_CategoriaMaterialId",
-                table: "Materiales",
-                column: "CategoriaMaterialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Materiales_EmpresaId1",
-                table: "Materiales",
-                column: "EmpresaId1");
+                name: "IX_Material_EmpresaId",
+                table: "Material",
+                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MaterialPresupuesto_MaterialId",
@@ -733,9 +960,9 @@ namespace SafyroPresupuestos.Migrations
                 column: "ProyectoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Proyectos_EmpresaId1",
+                name: "IX_Proyectos_EmpresaId",
                 table: "Proyectos",
-                column: "EmpresaId1");
+                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ResumenesFinancieros_PresupuestoId",
@@ -743,9 +970,29 @@ namespace SafyroPresupuestos.Migrations
                 column: "PresupuestoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ServicioTercero_EmpresaId",
+                table: "ServicioTercero",
+                column: "EmpresaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServicioTerceroPresupuesto_PresupuestoId",
+                table: "ServicioTerceroPresupuesto",
+                column: "PresupuestoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServicioTerceroPresupuesto_ServicioTerceroId",
+                table: "ServicioTerceroPresupuesto",
+                column: "ServicioTerceroId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TiposEquipo_EquipoDepreciacionId",
                 table: "TiposEquipo",
                 column: "EquipoDepreciacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_EmpresaId",
+                table: "Usuarios",
+                column: "EmpresaId");
         }
 
         /// <inheritdoc />
@@ -770,13 +1017,25 @@ namespace SafyroPresupuestos.Migrations
                 name: "BitacorasPresupuesto");
 
             migrationBuilder.DropTable(
-                name: "EquipoPresupuesto");
+                name: "CategoriasMaterial");
+
+            migrationBuilder.DropTable(
+                name: "CostoIndirectoPresupuesto");
+
+            migrationBuilder.DropTable(
+                name: "EquipoRealPresupuesto");
+
+            migrationBuilder.DropTable(
+                name: "ItemPresupuesto");
 
             migrationBuilder.DropTable(
                 name: "ManoObraPresupuesto");
 
             migrationBuilder.DropTable(
                 name: "MaterialPresupuesto");
+
+            migrationBuilder.DropTable(
+                name: "MaterialRealPresupuesto");
 
             migrationBuilder.DropTable(
                 name: "PartidaPresupuesto");
@@ -788,16 +1047,28 @@ namespace SafyroPresupuestos.Migrations
                 name: "ResumenesFinancieros");
 
             migrationBuilder.DropTable(
+                name: "ServicioTerceroPresupuesto");
+
+            migrationBuilder.DropTable(
                 name: "TiposEquipo");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CostoIndirecto");
+
+            migrationBuilder.DropTable(
+                name: "EquipoPresupuesto");
+
+            migrationBuilder.DropTable(
                 name: "ManosObra");
 
             migrationBuilder.DropTable(
-                name: "Materiales");
+                name: "Material");
 
             migrationBuilder.DropTable(
                 name: "CapituloPresupuesto");
@@ -806,22 +1077,22 @@ namespace SafyroPresupuestos.Migrations
                 name: "Partida");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Presupuestos");
+                name: "ServicioTercero");
 
             migrationBuilder.DropTable(
                 name: "EquiposDepreciacion");
 
             migrationBuilder.DropTable(
+                name: "Presupuestos");
+
+            migrationBuilder.DropTable(
                 name: "TiposManoObra");
 
             migrationBuilder.DropTable(
-                name: "CategoriasMaterial");
-
-            migrationBuilder.DropTable(
-                name: "Monedas");
+                name: "Moneda");
 
             migrationBuilder.DropTable(
                 name: "Proyectos");

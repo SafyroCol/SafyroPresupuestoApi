@@ -21,14 +21,14 @@ namespace SafyroPresupuestos.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal CostoReal { get; set; }
 
-        public DateTime FechaRegistro { get; set; } = DateTime.Now;
+        public DateTime? FechaRegistro { get; set; } = DateTime.Now;
 
         // Relaciones de navegación (opcional)
         [ForeignKey(nameof(PresupuestoId))]
-        public virtual Presupuestos Presupuesto { get; set; }
+        public virtual Presupuestos? Presupuesto { get; set; }
 
         [ForeignKey(nameof(EquipoPresupuestoId))]
-        public virtual EquipoPresupuesto EquipoPresupuesto { get; set; }
+        public virtual EquipoPresupuesto? EquipoPresupuesto { get; set; }
     }
 
 

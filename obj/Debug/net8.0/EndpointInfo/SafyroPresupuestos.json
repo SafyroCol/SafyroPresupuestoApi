@@ -1025,6 +1025,179 @@
         }
       }
     },
+    "/api/evidencia/upload": {
+      "post": {
+        "tags": [
+          "Evidencia"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "proyectoId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "comentario": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "proyectoId": {
+                  "style": "form"
+                },
+                "files": {
+                  "style": "form"
+                },
+                "comentario": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/evidencia/por-proyecto/{proyectoId}": {
+      "get": {
+        "tags": [
+          "Evidencia"
+        ],
+        "parameters": [
+          {
+            "name": "proyectoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/evidencia/comentario": {
+      "patch": {
+        "tags": [
+          "Evidencia"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenciaComentarioUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenciaComentarioUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenciaComentarioUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EvidenciasItem/cargar": {
+      "post": {
+        "tags": [
+          "EvidenciasItem"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ItemId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Costo": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Archivo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "ItemId": {
+                  "style": "form"
+                },
+                "Costo": {
+                  "style": "form"
+                },
+                "Archivo": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EvidenciasItem/por-item/{itemId}": {
+      "get": {
+        "tags": [
+          "EvidenciasItem"
+        ],
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Exportar/reportes": {
       "get": {
         "tags": [
@@ -1157,134 +1330,6 @@
       "delete": {
         "tags": [
           "ManoObra"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/ManoObraPresupuesto": {
-      "get": {
-        "tags": [
-          "ManoObraPresupuesto"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "ManoObraPresupuesto"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManoObraPresupuesto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManoObraPresupuesto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManoObraPresupuesto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/ManoObraPresupuesto/{id}": {
-      "get": {
-        "tags": [
-          "ManoObraPresupuesto"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "ManoObraPresupuesto"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManoObraPresupuesto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManoObraPresupuesto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManoObraPresupuesto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "ManoObraPresupuesto"
         ],
         "parameters": [
           {
@@ -2241,6 +2286,115 @@
         }
       }
     },
+    "/api/Presupuesto/{presupuestoId}/costos-reales": {
+      "post": {
+        "tags": [
+          "Presupuesto"
+        ],
+        "parameters": [
+          {
+            "name": "presupuestoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PresupuestoDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PresupuestoDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PresupuestoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Presupuesto/{presupuestoId}/items": {
+      "get": {
+        "tags": [
+          "Presupuesto"
+        ],
+        "parameters": [
+          {
+            "name": "presupuestoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rubro",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Presupuesto/{presupuestoId}/item/{itemId}/evidencias": {
+      "post": {
+        "tags": [
+          "Presupuesto"
+        ],
+        "parameters": [
+          {
+            "name": "presupuestoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Proyecto": {
       "get": {
         "tags": [
@@ -3163,15 +3317,61 @@
             "type": "integer",
             "format": "int32"
           },
+          "presupuesto": {
+            "$ref": "#/components/schemas/Presupuestos"
+          },
           "equipoDepreciacionId": {
             "type": "integer",
             "format": "int32"
           },
-          "presupuesto": {
-            "$ref": "#/components/schemas/Presupuestos"
-          },
           "equipoDepreciacion": {
             "$ref": "#/components/schemas/EquipoDepreciacion"
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "unidad": {
+            "type": "string",
+            "nullable": true
+          },
+          "cantidad": {
+            "type": "number",
+            "format": "double"
+          },
+          "valorUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "valorTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "rubro": {
+            "type": "string",
+            "nullable": true
+          },
+          "observaciones": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EvidenciaComentarioUpdateDto": {
+        "type": "object",
+        "properties": {
+          "evidenciaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "comentario": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3214,13 +3414,13 @@
             "type": "string",
             "nullable": true
           },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
           "costoHora": {
             "type": "number",
             "format": "double"
-          },
-          "horasTrabajadas": {
-            "type": "integer",
-            "format": "int32"
           },
           "empresaId": {
             "type": "integer",
@@ -3235,30 +3435,6 @@
           },
           "tipoManoObra": {
             "$ref": "#/components/schemas/TipoManoObra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ManoObraPresupuesto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "presupuestoId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "presupuesto": {
-            "$ref": "#/components/schemas/Presupuestos"
-          },
-          "manoObraId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "manoObra": {
-            "$ref": "#/components/schemas/ManoObra"
           }
         },
         "additionalProperties": false
@@ -3284,13 +3460,6 @@
           },
           "empresa": {
             "$ref": "#/components/schemas/Empresa"
-          },
-          "categoriaMaterialId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "categoriaMaterial": {
-            "$ref": "#/components/schemas/CategoriaMaterial"
           }
         },
         "additionalProperties": false
@@ -3316,7 +3485,15 @@
           "material": {
             "$ref": "#/components/schemas/Material"
           },
-          "unidadDeMedida": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "unidad": {
             "type": "string",
             "nullable": true
           },
@@ -3324,9 +3501,25 @@
             "type": "number",
             "format": "double"
           },
-          "costoUnitario": {
+          "valorUnitario": {
             "type": "number",
             "format": "double"
+          },
+          "valorTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "rubro": {
+            "type": "string",
+            "nullable": true
+          },
+          "tamaño": {
+            "type": "string",
+            "nullable": true
+          },
+          "observaciones": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3501,6 +3694,18 @@
             "type": "number",
             "format": "double"
           },
+          "monedaNombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "monedaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "monedaSimbolo": {
+            "type": "string",
+            "nullable": true
+          },
           "monedaId": {
             "type": "integer",
             "format": "int32"
@@ -3508,6 +3713,31 @@
           "fechaCreacion": {
             "type": "string",
             "format": "date-time"
+          },
+          "costoRealMateriales": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealManoObra": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealEquipos": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealServiciosTerceros": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealCostosIndirectos": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3589,6 +3819,31 @@
           },
           "moneda": {
             "$ref": "#/components/schemas/Moneda"
+          },
+          "costoRealMateriales": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealManoObra": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealEquipos": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealServiciosTerceros": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "costoRealCostosIndirectos": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3870,8 +4125,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "format": "uuid"
+            "type": "integer",
+            "format": "int32"
           },
           "nombre": {
             "type": "string",

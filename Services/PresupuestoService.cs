@@ -68,10 +68,10 @@ namespace SafyroPresupuestos.Services
                 {
                     MaterialPresupuestoId = m.Id,
                     NombreMaterial = m.Material.Nombre,
-                    UnidadMedida = m.UnidadDeMedida,
+                    UnidadMedida = m.Unidad,
                     Cantidad = m.Cantidad,
-                    CostoUnitarioPresupuestado = m.CostoUnitario,
-                    CostoTotalPresupuestado = m.CostoUnitario * m.Cantidad
+                    CostoUnitarioPresupuestado = m.ValorUnitario,
+                    CostoTotalPresupuestado = m.ValorUnitario * m.Cantidad
                 })
                 .ToListAsync();
 
@@ -162,6 +162,7 @@ namespace SafyroPresupuestos.Services
         public async Task<PresupuestoDto> ObtenerPorProyectoIdAsync(int proyectoId)
         {
             var presupuesto = await _context.Presupuestos
+                .Include(p => p.Moneda) // Incluye la navegación a Moneda
                 .FirstOrDefaultAsync(p => p.ProyectoId == proyectoId);
 
             if (presupuesto == null)
@@ -176,7 +177,11 @@ namespace SafyroPresupuestos.Services
                 CostoMateriales = presupuesto.SubtotalMateriales,
                 CostoManoObra = presupuesto.SubtotalManoObra,
                 CostoDepreciacion = presupuesto.SubtotalEquipos,
-                // Incluye más campos si los necesitas
+                CostoOtros = presupuesto.SubtotalOtros,
+                CostoIndirectos = presupuesto.Indirectos,
+                MonedaNombre = presupuesto.Moneda != null ? presupuesto.Moneda.Nombre : null,
+                MonedaCodigo = presupuesto.Moneda != null ? presupuesto.Moneda.Codigo : null,
+                MonedaSimbolo = presupuesto.Moneda != null ? presupuesto.Moneda.Simbolo : null,                
             };
         }
 

@@ -14,7 +14,7 @@ namespace SafyroPresupuestos.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Proyecto> Proyectos { get; set; }
         public DbSet<Presupuestos> Presupuestos { get; set; }
-        public DbSet<Material> Materiales { get; set; }
+        public DbSet<Material> Material { get; set; }
         public DbSet<ManoObra> ManosObra { get; set; }
         public DbSet<EquipoDepreciacion> EquiposDepreciacion { get; set; }
         public DbSet<CategoriaMaterial> CategoriasMaterial { get; set; }
@@ -32,6 +32,14 @@ namespace SafyroPresupuestos.Data
 		public DbSet<MaterialPresupuesto> MaterialPresupuesto { get; set; }
         public DbSet<MaterialRealPresupuesto> MaterialRealPresupuesto { get; set; }
         public DbSet<EquipoRealPresupuesto> EquipoRealPresupuesto { get; set; }
+        public DbSet<ItemPresupuesto> ItemPresupuesto { get; set; }
+        public DbSet<CostoIndirecto> CostoIndirecto { get; set; }
+        public DbSet<CostoIndirectoPresupuesto> CostoIndirectoPresupuesto { get; set; }
+        public DbSet<ServicioTercero> ServicioTercero { get; set; }
+        public DbSet<ServicioTerceroPresupuesto> ServicioTerceroPresupuesto { get; set; }
+        public DbSet<Evidencia> Evidencias { get; set; }
+
+        public DbSet<EvidenciaItemPresupuesto> EvidenciasItemPresupuesto { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -83,6 +91,30 @@ namespace SafyroPresupuestos.Data
 				.WithMany()
 				.HasForeignKey(ep => ep.PartidaId)
 				.OnDelete(DeleteBehavior.Restrict); /// ← también evita cascada
-		}
+            // En tu DbContext, dentro de OnModelCreating
+            modelBuilder.Entity<CostoIndirectoPresupuesto>()
+                .HasOne(c => c.Presupuesto)
+                .WithMany() // o .WithMany(p => p.CostosIndirectosPresupuesto) si tienes la colección
+                .HasForeignKey(c => c.PresupuestoId)
+                .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.NoAction
+
+            modelBuilder.Entity<CostoIndirectoPresupuesto>()
+                .HasOne(c => c.CostoIndirecto)
+                .WithMany()
+                .HasForeignKey(c => c.CostoIndirectoId)
+                .OnDelete(DeleteBehavior.Cascade); // Solo una puede ser Cascade
+                                                   // En tu DbContext, dentro de OnModelCreating
+            modelBuilder.Entity<ServicioTerceroPresupuesto>()
+                .HasOne(c => c.Presupuesto)
+                .WithMany() // o .WithMany(p => p.ServicioTerceroPresupuesto) si tienes la colección
+                .HasForeignKey(c => c.PresupuestoId)
+                .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.NoAction
+
+            modelBuilder.Entity<ServicioTerceroPresupuesto>()
+                .HasOne(c => c.ServicioTercero)
+                .WithMany()
+                .HasForeignKey(c => c.ServicioTerceroId)
+                .OnDelete(DeleteBehavior.Cascade); // Solo una puede ser Cascade
+        }
 	}
 }

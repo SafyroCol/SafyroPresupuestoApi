@@ -613,6 +613,106 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SafyroPresupuestos.Controllers.EvidenciaController",
+    "Method": "ActualizarComentarioEvidencia",
+    "RelativePath": "api/evidencia/comentario",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SafyroPresupuestos.DTOs.EvidenciaComentarioUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.EvidenciaController",
+    "Method": "GetEvidenciasPorProyecto",
+    "RelativePath": "api/evidencia/por-proyecto/{proyectoId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "proyectoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.EvidenciaController",
+    "Method": "UploadEvidencia",
+    "RelativePath": "api/evidencia/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "proyectoId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "files",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "comentario",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.EvidenciasItemController",
+    "Method": "CargarEvidencia",
+    "RelativePath": "api/EvidenciasItem/cargar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ItemId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Costo",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "Archivo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.EvidenciasItemController",
+    "Method": "ListarEvidencias",
+    "RelativePath": "api/EvidenciasItem/por-item/{itemId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "itemId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SafyroPresupuestos.Controllers.ExportarController",
     "Method": "ExportarReportes",
     "RelativePath": "api/Exportar/reportes",
@@ -699,85 +799,6 @@
     "ContainingType": "SafyroPresupuestos.Controllers.ManoObraController",
     "Method": "Delete",
     "RelativePath": "api/ManoObra/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SafyroPresupuestos.Controllers.ManoObraPresupuestoController",
-    "Method": "GetAll",
-    "RelativePath": "api/ManoObraPresupuesto",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SafyroPresupuestos.Controllers.ManoObraPresupuestoController",
-    "Method": "Create",
-    "RelativePath": "api/ManoObraPresupuesto",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "SafyroPresupuestos.Entities.ManoObraPresupuesto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SafyroPresupuestos.Controllers.ManoObraPresupuestoController",
-    "Method": "Get",
-    "RelativePath": "api/ManoObraPresupuesto/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SafyroPresupuestos.Controllers.ManoObraPresupuestoController",
-    "Method": "Update",
-    "RelativePath": "api/ManoObraPresupuesto/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "model",
-        "Type": "SafyroPresupuestos.Entities.ManoObraPresupuesto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "SafyroPresupuestos.Controllers.ManoObraPresupuestoController",
-    "Method": "Delete",
-    "RelativePath": "api/ManoObraPresupuesto/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1292,6 +1313,69 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.PresupuestoController",
+    "Method": "GuardarCostosReales",
+    "RelativePath": "api/Presupuesto/{presupuestoId}/costos-reales",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "presupuestoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "SafyroPresupuestos.DTOs.PresupuestoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.PresupuestoController",
+    "Method": "CargarEvidencia",
+    "RelativePath": "api/Presupuesto/{presupuestoId}/item/{itemId}/evidencias",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "presupuestoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "itemId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.PresupuestoController",
+    "Method": "GetItemsPorRubro",
+    "RelativePath": "api/Presupuesto/{presupuestoId}/items",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "presupuestoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "rubro",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
