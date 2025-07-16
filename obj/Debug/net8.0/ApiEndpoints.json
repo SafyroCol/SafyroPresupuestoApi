@@ -812,6 +812,58 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SafyroPresupuestos.Controllers.MatePresupuestoController",
+    "Method": "GetById",
+    "RelativePath": "api/MatePresupuesto/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SafyroPresupuestos.Entities.MaterialPresupuesto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SafyroPresupuestos.Controllers.MatePresupuestoController",
+    "Method": "GetByPresupuestoId",
+    "RelativePath": "api/MatePresupuesto/ByPresupuesto/{presupuestoId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "presupuestoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[SafyroPresupuestos.Entities.MaterialPresupuesto, SafyroPresupuestos, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SafyroPresupuestos.Controllers.MaterialController",
     "Method": "GetAll",
     "RelativePath": "api/Material",

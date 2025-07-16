@@ -1350,6 +1350,97 @@
         }
       }
     },
+    "/api/MatePresupuesto/{id}": {
+      "get": {
+        "tags": [
+          "MatePresupuesto"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialPresupuesto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialPresupuesto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialPresupuesto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MatePresupuesto/ByPresupuesto/{presupuestoId}": {
+      "get": {
+        "tags": [
+          "MatePresupuesto"
+        ],
+        "parameters": [
+          {
+            "name": "presupuestoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialPresupuesto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialPresupuesto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialPresupuesto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Material": {
       "get": {
         "tags": [

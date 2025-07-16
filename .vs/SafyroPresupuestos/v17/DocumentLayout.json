@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E9ED0DE3-7280-4EB4-B910-DDDE2E0DD57E}|SafyroPresupuestos.csproj|c:\\users\\user\\documents\\github\\safyro\\safyropresupuestoapi\\controllers\\matepresupuestocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9ED0DE3-7280-4EB4-B910-DDDE2E0DD57E}|SafyroPresupuestos.csproj|solutionrelative:controllers\\matepresupuestocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9ED0DE3-7280-4EB4-B910-DDDE2E0DD57E}|SafyroPresupuestos.csproj|c:\\users\\user\\documents\\github\\safyro\\safyropresupuestoapi\\controllers\\materialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9ED0DE3-7280-4EB4-B910-DDDE2E0DD57E}|SafyroPresupuestos.csproj|solutionrelative:controllers\\materialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9ED0DE3-7280-4EB4-B910-DDDE2E0DD57E}|SafyroPresupuestos.csproj|c:\\users\\user\\documents\\github\\safyro\\safyropresupuestoapi\\controllers\\presupuestocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9ED0DE3-7280-4EB4-B910-DDDE2E0DD57E}|SafyroPresupuestos.csproj|solutionrelative:controllers\\presupuestocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MatePresupuestoController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\Controllers\\MatePresupuestoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MatePresupuestoController.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\Controllers\\MatePresupuestoController.cs",
+              "RelativeToolTip": "Controllers\\MatePresupuestoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T19:54:06.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PresupuestoController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\Controllers\\PresupuestoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PresupuestoController.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\Controllers\\PresupuestoController.cs",
+              "RelativeToolTip": "Controllers\\PresupuestoController.cs",
+              "ViewState": "AgIAAPoBAAAAAAAAAAAgwBACAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T19:41:02.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MaterialController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\Controllers\\MaterialController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MaterialController.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\Safyro\\SafyroPresupuestoApi\\Controllers\\MaterialController.cs",
+              "RelativeToolTip": "Controllers\\MaterialController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T19:40:54.443Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

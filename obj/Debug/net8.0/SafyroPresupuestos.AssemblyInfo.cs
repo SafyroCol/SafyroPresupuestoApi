@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SafyroPresupuestos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff72f942521a8386ea56048f2acff020b956bc24")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc3eb921089519a82b16a91520baefda9af51f4c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SafyroPresupuestos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SafyroPresupuestos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

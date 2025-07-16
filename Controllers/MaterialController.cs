@@ -9,6 +9,7 @@ namespace SafyroPresupuestos.Controllers
     [Authorize(Roles = "AdministradorEmpresa,CoordinadorDeProyecto,IngenieroDeCostos")]
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class MaterialController : BaseController
     {
         private readonly IMaterialService _service;
